@@ -5,6 +5,9 @@ from random import shuffle
 from statistics import mean, stdev
 
 from pandas import DataFrame
+import numpy as np
+from numpy import percentile
+
 #%%
 TOT_PT = 150
 TOT_PT = 200
@@ -91,28 +94,37 @@ class Hospital:
         return self.disch_pt
             
             
-pt_groups = [
-            [Patient(ctas_lvl=1, ruoc=5) for i in range(int(TOT_PT*0.02))],
-            [Patient(ctas_lvl=2, ruoc=3) for i in range(int(TOT_PT*0.08))],
-            [Patient(ctas_lvl=3, ruoc=3) for i in range(int(TOT_PT*0.50))],
-            [Patient(ctas_lvl=4, ruoc=1) for i in range(int(TOT_PT*0.30))],
-            [Patient(ctas_lvl=5, ruoc=1) for i in range(int(TOT_PT*0.10))],
-            ]
+if 0:            
+    pt_groups = [
+                [Patient(ctas_lvl=1, ruoc=5) for i in range(int(TOT_PT*0.02))],
+                [Patient(ctas_lvl=2, ruoc=3) for i in range(int(TOT_PT*0.08))],
+                [Patient(ctas_lvl=3, ruoc=3) for i in range(int(TOT_PT*0.50))],
+                [Patient(ctas_lvl=4, ruoc=1) for i in range(int(TOT_PT*0.30))],
+                [Patient(ctas_lvl=5, ruoc=1) for i in range(int(TOT_PT*0.10))],
+                ]
 
-pt_groups = [
-            [Patient(ctas_lvl=1, ruoc=1.5) for i in range(int(TOT_PT*0.02))],
-            [Patient(ctas_lvl=2, ruoc=1) for i in range(int(TOT_PT*0.08))],
-            [Patient(ctas_lvl=3, ruoc=1) for i in range(int(TOT_PT*0.50))],
-            [Patient(ctas_lvl=4, ruoc=0.5) for i in range(int(TOT_PT*0.30))],
-            [Patient(ctas_lvl=5, ruoc=0.5) for i in range(int(TOT_PT*0.10))],
-            ]
-
-waittimes = []
-for i in range(50):
     pt_groups = [
                 [Patient(ctas_lvl=1, ruoc=4) for i in range(int(TOT_PT*0.02))],
                 [Patient(ctas_lvl=2, ruoc=1.5) for i in range(int(TOT_PT*0.08))],
                 [Patient(ctas_lvl=3, ruoc=1.5) for i in range(int(TOT_PT*0.50))],
+                [Patient(ctas_lvl=4, ruoc=0.75) for i in range(int(TOT_PT*0.30))],
+                [Patient(ctas_lvl=5, ruoc=0.75) for i in range(int(TOT_PT*0.10))],
+                ]
+    pt_groups = [
+                [Patient(ctas_lvl=1, ruoc=1.5) for i in range(int(TOT_PT*0.02))],
+                [Patient(ctas_lvl=2, ruoc=1) for i in range(int(TOT_PT*0.08))],
+                [Patient(ctas_lvl=3, ruoc=1) for i in range(int(TOT_PT*0.50))],
+                [Patient(ctas_lvl=4, ruoc=0.5) for i in range(int(TOT_PT*0.30))],
+                [Patient(ctas_lvl=5, ruoc=0.5) for i in range(int(TOT_PT*0.10))],
+                ]
+
+waittimes = []
+waittimes90 = []
+for i in range(100):
+    pt_groups = [
+                [Patient(ctas_lvl=1, ruoc=3) for i in range(int(TOT_PT*0.02))],
+                [Patient(ctas_lvl=2, ruoc=1.25) for i in range(int(TOT_PT*0.08))],
+                [Patient(ctas_lvl=3, ruoc=1.25) for i in range(int(TOT_PT*0.50))],
                 [Patient(ctas_lvl=4, ruoc=0.75) for i in range(int(TOT_PT*0.30))],
                 [Patient(ctas_lvl=5, ruoc=0.75) for i in range(int(TOT_PT*0.10))],
                 ]
@@ -121,14 +133,19 @@ for i in range(50):
     shuffle(pt_list) # Shuffle patients
 
     hcp_list = [HCProvider() for i in range(2)] + [HCProvider(min_ctas=3) for i in range(3)]
+    hcp_list = [HCProvider() for i in range(2)] + [HCProvider() for i in range(2)]
+    hcp_list = [HCProvider() for i in range(2)] + [HCProvider(min_ctas=3) for i in range(2)]
 
     hospital1 = Hospital(pt_list=pt_list, hcp_list=hcp_list)
     hospital1.runSim()
     mean_waittime = mean([pt.wait_time for pt in hospital1.disch_pt])
+    mean_waittime90 = percentile([pt.wait_time for pt in hospital1.disch_pt], 90)
     waittimes.append(mean_waittime)
-    print(F"Mean wait time in hours: {mean_waittime}")
+    waittimes90.append(mean_waittime90)
+    print(F"Mean wait time in hours: {mean_waittime}| 90%ile: {mean_waittime90}")
     
 print(F"Overall Monte Carlo wait time: {mean(waittimes)} +/- {stdev(waittimes)}")
+print(F"Overall Monte Carlo 90%ile wait time: {mean(waittimes90)} +/- {stdev(waittimes90)}")
 
 
 #%%

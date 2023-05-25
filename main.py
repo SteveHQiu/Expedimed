@@ -103,31 +103,31 @@ class Hospital:
         print(F"Discharged patients: {len(self.disch_pt)}")
         return self.disch_pt
             
-            
-pt_groups = [
-            [Patient(ctas_lvl=1, ruoc=5) for i in range(int(TOT_PT*0.02))],
-            [Patient(ctas_lvl=2, ruoc=3) for i in range(int(TOT_PT*0.08))],
-            [Patient(ctas_lvl=3, ruoc=3) for i in range(int(TOT_PT*0.50))],
-            [Patient(ctas_lvl=4, ruoc=1) for i in range(int(TOT_PT*0.30))],
-            [Patient(ctas_lvl=5, ruoc=1) for i in range(int(TOT_PT*0.10))],
-            ]
+if 0:            
+    pt_groups = [
+                [Patient(ctas_lvl=1, ruoc=5) for i in range(int(TOT_PT*0.02))],
+                [Patient(ctas_lvl=2, ruoc=3) for i in range(int(TOT_PT*0.08))],
+                [Patient(ctas_lvl=3, ruoc=3) for i in range(int(TOT_PT*0.50))],
+                [Patient(ctas_lvl=4, ruoc=1) for i in range(int(TOT_PT*0.30))],
+                [Patient(ctas_lvl=5, ruoc=1) for i in range(int(TOT_PT*0.10))],
+                ]
 
-pt_groups = [
-            [Patient(ctas_lvl=1, ruoc=1.5) for i in range(int(TOT_PT*0.02))],
-            [Patient(ctas_lvl=2, ruoc=1) for i in range(int(TOT_PT*0.08))],
-            [Patient(ctas_lvl=3, ruoc=1) for i in range(int(TOT_PT*0.50))],
-            [Patient(ctas_lvl=4, ruoc=0.5) for i in range(int(TOT_PT*0.30))],
-            [Patient(ctas_lvl=5, ruoc=0.5) for i in range(int(TOT_PT*0.10))],
-            ]
-
-waittimes = []
-for i in range(50):
     pt_groups = [
                 [Patient(ctas_lvl=1, ruoc=4) for i in range(int(TOT_PT*0.02))],
                 [Patient(ctas_lvl=2, ruoc=1.5) for i in range(int(TOT_PT*0.08))],
                 [Patient(ctas_lvl=3, ruoc=1.5) for i in range(int(TOT_PT*0.50))],
                 [Patient(ctas_lvl=4, ruoc=0.75) for i in range(int(TOT_PT*0.30))],
                 [Patient(ctas_lvl=5, ruoc=0.75) for i in range(int(TOT_PT*0.10))],
+                ]
+
+waittimes = []
+for i in range(50):
+    pt_groups = [
+                [Patient(ctas_lvl=1, ruoc=1.5) for i in range(int(TOT_PT*0.02))],
+                [Patient(ctas_lvl=2, ruoc=1) for i in range(int(TOT_PT*0.08))],
+                [Patient(ctas_lvl=3, ruoc=1) for i in range(int(TOT_PT*0.50))],
+                [Patient(ctas_lvl=4, ruoc=0.5) for i in range(int(TOT_PT*0.30))],
+                [Patient(ctas_lvl=5, ruoc=0.5) for i in range(int(TOT_PT*0.10))],
                 ]
 
     pt_list = [pt for sublist in pt_groups for pt in sublist]
